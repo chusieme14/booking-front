@@ -153,6 +153,7 @@ export default {
     }
 
      .login-inner .v-card .v-card__text {
+        font-size: 18px;
          padding-bottom: 0 !important;
      }
 

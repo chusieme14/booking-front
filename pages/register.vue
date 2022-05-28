@@ -1,23 +1,71 @@
 <template>
-    <v-card height="92vh">
-        <v-card-title>
-            <span class="text-h5">Register a new membership</span>
-            </v-card-title>
-        <v-card-text class="main-container">
-            <v-text-field color="success" v-model="payload.residence" label="Student number"></v-text-field>
-            <v-text-field color="success" v-model="payload.residence" label="Last name"></v-text-field>
-            <v-text-field color="success" v-model="payload.residence" label="First name"></v-text-field>
-            <v-text-field color="success" v-model="payload.residence" label="Middle name"></v-text-field>
-            <v-text-field color="success" v-model="payload.residence" label="Email"></v-text-field>
-            <v-text-field color="success" v-model="payload.residence" label="Phone number"></v-text-field>
-            <v-text-field color="success" type="password" v-model="payload.residence" label="Password"></v-text-field>
-            <v-text-field color="success" type="password" v-model="payload.residence" label="Retype password"></v-text-field>
-        </v-card-text>
-        <v-card-actions class="custom-card-action mr-2">
-            <v-btn @click="save" color="success">Register</v-btn>
-        </v-card-actions>
-        
-    </v-card>
+    <div class="register">
+        <div class="register-inner">
+            <v-card>
+                <v-img src="/header_logo.png"></v-img>
+                <v-card-title class="card-title">NWSSU BOOKING SYSTEM</v-card-title>
+                <v-card-text>
+                    <span class="register-text">Register a new membership</span>
+                </v-card-text>
+                <v-card-text class="main-container">
+                    <v-text-field
+                        label="Student Number"
+                        placeholder="Student Number"
+                        append-icon="mdi-snowflake"
+                        outlined
+                    ></v-text-field>
+                    <v-text-field
+                        label="Last Name"
+                        placeholder="Last Name"
+                        append-icon="mdi-account"
+                        outlined
+                    ></v-text-field>
+                    <v-text-field
+                        label="First Name"
+                        placeholder="First Name"
+                        append-icon="mdi-account"
+                        outlined
+                    ></v-text-field>
+                    <v-text-field
+                        label="Middle Name"
+                        placeholder="Middle Name"
+                        append-icon="mdi-account"
+                        outlined
+                    ></v-text-field>
+                    <v-text-field
+                        label="Email"
+                        placeholder="Email"
+                        append-icon="mdi-email"
+                        outlined
+                    ></v-text-field>
+                    <v-text-field
+                        label="Phone Number"
+                        placeholder="Phone Number"
+                        append-icon="mdi-cellphone"
+                        outlined
+                    ></v-text-field>
+                    <v-text-field
+                        label="Password"
+                        placeholder="Password"
+                        append-icon="mdi-lock"
+                        outlined
+                    ></v-text-field>
+                    <v-text-field
+                        label="Password"
+                        placeholder="Password"
+                        append-icon="mdi-repeat"
+                        outlined
+                    ></v-text-field>
+                </v-card-text>
+                <v-card-actions class="custom-card-action mr-2">
+                    <v-btn class="save" @click="save" color="success">Register</v-btn>
+                </v-card-actions>
+            </v-card>
+            <div class="alreadyhave-accnt">
+                <v-card-text>I already have a membership <v-btn text @click="$router.push({path: '/register'})">Sign in</v-btn></v-card-text>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 export default {
@@ -81,23 +129,54 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    .class-images{
+    .register {
+        padding-top: 3%;
+        padding-bottom: 3%;
         display: flex;
         justify-content: center;
+        background-color: #d2d6de;
+    }
 
-        .v-image{
-            cursor: pointer;
-        }
-    }
-    .image-text-field{
-        margin-top: -19px !important;
-    }
-    .custom-card-action{
+    .register-inner {
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
+        flex-direction: column;
     }
-    .main-container{
-        max-height: 84vh;
-        overflow: auto;
+
+    .register .register-inner .v-card {
+        background-position: top;
+        background-size: 47%;
+        width: 500px;
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .register .card-title {
+        font-size: 26px;
+        color: #006400;
+        font-weight: 800;
+        justify-content: center;
+    }
+
+    .register .register-text {
+        font-size: 18px;
+        text-align: center;
+        display: block;
+    }
+
+    .register .save {
+        margin-left: auto;
+    }
+
+    .register .alreadyhave-accnt {
+        text-align: center;
+        margin-top: 20px;
+        box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+    }
+
+    @media(max-width: 480px) {
+        .register .register-inner .v-card {
+            width: 400px !important;
+        }
     }
 </style>
