@@ -2,31 +2,28 @@
     <div class="login">
         <div class="login-inner">
             <v-card class="login-cont">
-                <v-card-title>NWSSU Alumni</v-card-title>
+                <v-img src="/header_logo.png"></v-img>
+                <v-card-title>NWSSU BOOKING SYSTEM</v-card-title>
+                <v-card-text class="sign-text">Sign in to start your session</v-card-text>
                 <v-card-text>
                     <v-form ref="form" lazy-validation>
                         <v-text-field
-                            label="Email or student number"
-                            :rules="[() => !!payload.email ||  '']"
-                            v-model="payload.email"
-                            filled
-                            dense
+                            label="Username"
+                            placeholder="Username"
+                            append-icon="mdi-account"
+                            outlined
                         ></v-text-field>
                         <v-text-field
-                            :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
                             label="Password"
-                            :rules="[() => !!payload.password ||  '']"
-                            v-model="payload.password"
-                            filled
-                            :type="show3 ? 'text' : 'password'"
-                            dense
-                            @click:append="show3 = !show3"
+                            placeholder="Password"
+                            append-icon="mdi-lock"
+                            outlined
                         ></v-text-field>
                     </v-form>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn @click="login" color="success">Log In</v-btn>
+                    <v-btn class="login-btn" @click="login" color="success">Sign In</v-btn>
                 </v-card-actions>
                  <v-card-actions>
                     <v-spacer></v-spacer>
@@ -109,7 +106,7 @@ export default {
     .login {
         display: flex;
         justify-content: center;
-        
+        background-color: #d2d6de;
     }
 
     .login-inner {
@@ -123,7 +120,21 @@ export default {
         background-position: top;
         background-size: 47%;
         width: 500px;
-        background-image: linear-gradient(rgba(255,255,255,.6), rgba(255,255,255,.6)), url('/logo.png');
+        padding: 15px;
+    }
+
+    .login-inner .v-card .v-card__title {
+        font-size: 26px;
+        color: #006400;
+        font-weight: 800;
+        justify-content: center;
+    }
+
+    .login .v-card {
+        font-size: 20px;
+        text-align: center;
+        font-weight: 400;
+        border-radius: 20px;
     }
 
     .login-inner .v-card,
@@ -145,8 +156,11 @@ export default {
          padding-bottom: 0 !important;
      }
 
-     .login-inner .v-card button {
-         width: 96%;
+     .login-inner .v-card .login-btn {
+        width: 25%;
+        height: 40px;
+        display: block;
+        margin-left: auto;
      }
 
      .login-inner .v-card .v-card__actions {
