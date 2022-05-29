@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title class="class-title">
-            <v-avatar
+            <!-- <v-avatar
                 size="250"
             >
                 <img
@@ -15,7 +15,7 @@
                 type='file' class="hidden" 
                 accept="image/x-png,image/gif,image/jpeg" 
                 @change="onFileChange($event.target.files)"
-            />
+            /> -->
         </v-card-title>
         <v-card-text>
             <v-form ref="form">
@@ -44,7 +44,7 @@
         </v-card-text>
         <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn @click="update" color="success">Update</v-btn>
+            <v-btn class="mr-2" @click="update" color="success">Update</v-btn>
         </v-card-actions>
         <v-snackbar
             :timeout="-1"
@@ -100,7 +100,7 @@ export default {
         getGraduate(){
             this.$axios.get(`graduates/${this.$auth.user.id}`).then(({data})=>{
                 this.payload = data
-                this.payload.avatar = this.imageUrl+this.payload.avatar
+                // this.payload.avatar = this.imageUrl+this.payload.avatar
             })
         },
 

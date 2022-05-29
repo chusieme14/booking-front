@@ -5,15 +5,19 @@
                 <v-img @click="$router.push({path:'/'})" width="65" src="/logo.png"></v-img>
             </div>
             <div class="search">
-                <!-- <input placeholder="Search"> -->
+                <h2>NwSSU BOOKING SYSTEM</h2>
             </div>
             <div class="header-icons text-right">
-                <v-icon @click="$router.push({path:'/'})">mdi-home</v-icon>
-                <!-- <v-icon>mdi-heart-outline</v-icon> -->
-                <v-icon @click="$router.push({path:'/profile'})">mdi-account-circle</v-icon>
-                <div class="for-logout">
-                <v-btn text @click="logout">Switch</v-btn>
-              </div>
+                <v-tooltip bottom z-index=100>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-icon 
+                            @click="logout"
+                            v-bind="attrs"
+                            v-on="on"
+                        >mdi-logout</v-icon>
+                    </template>
+                    <span>Sign out</span>
+                </v-tooltip>
             </div>
         </div>
     </div>
@@ -53,35 +57,6 @@ export default {
         transition: height .2s ease-in-out;
     }
 
-    .search input {
-        -webkit-box-align: center;
-        -webkit-align-items: center;
-        -ms-flex-align: center;
-        align-items: center;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-flex: 0;
-        -webkit-flex: 0 1 auto;
-        -ms-flex: 0 1 auto;
-        flex: 0 1 auto;
-        height: 36px;
-        min-width: 125px;
-        width: 268px;
-        background: #efefef;
-        border-radius: 8px;
-        padding: 0 20px;
-    }
-
-    .search input:focus-visible {
-        outline: none;
-    }
-
-    .search {
-        -webkit-box-flex: 1;
-        flex: 0 1 auto;
-    }
 
     .logo {
         -webkit-box-flex: 1;

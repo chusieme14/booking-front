@@ -8,22 +8,40 @@
                 <v-card-text>
                     <v-form ref="form" lazy-validation>
                         <v-text-field
-                            label="Username"
-                            placeholder="Username"
+                            v-model="payload.email"
+                            color="success"
+                            label="Email/Student number"
+                            :rules="[() => !!payload.email ||  '']"
+                            placeholder="Email/Student number"
                             append-icon="mdi-account"
                             outlined
+                            dense
                         ></v-text-field>
+                        <!-- <v-text-field
+                            color="success"
+                            label="Email"
+                            v-model="payload.email"
+                            filled
+                            dense
+                        ></v-text-field> -->
                         <v-text-field
+                            v-model="payload.password"
+                            color="success"
+                            :rules="[() => !!payload.password ||  '']"
+                            :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
                             label="Password"
                             placeholder="Password"
-                            append-icon="mdi-lock"
                             outlined
+                            :type="show3 ? 'text' : 'password'"
+                            @click:append="show3=!show3"
+                            dense
                         ></v-text-field>
+                            <!-- append-icon="mdi-lock" -->
                     </v-form>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="login-btn" @click="login" color="success">Sign In</v-btn>
+                    <v-btn class="login-btn mr-2" @click="login" color="success">Sign In</v-btn>
                 </v-card-actions>
                  <v-card-actions>
                     <v-spacer></v-spacer>
