@@ -22,7 +22,7 @@
                         :key="requirement.id">{{requirement.name}}</p>
                 </div>
                 <div class="class-action">
-                    <v-btn color="success">Book</v-btn>
+                    <v-btn @click="save" color="success">Book</v-btn>
                 </div>
             </template>
         </v-card-text>
@@ -45,6 +45,12 @@ export default {
         },
         changeService(){
             this.payload.service_id = this.selectedService.id
+        },
+        save(){
+            this.payload.client_id = this.$auth.user.id
+            this.$axios.post(`bookings`,this.payload).then(({data})=>{
+                this.$emit('book')
+            })
         }
     },
     mounted(){
