@@ -14,6 +14,7 @@
                             :rules="[() => !!payload.email ||  '']"
                             placeholder="Email/Student number"
                             append-icon="mdi-account"
+                            @keydown.enter="login"
                             outlined
                             dense
                         ></v-text-field>
@@ -34,6 +35,7 @@
                             outlined
                             :type="show3 ? 'text' : 'password'"
                             @click:append="show3=!show3"
+                            @keydown.enter="login"
                             dense
                         ></v-text-field>
                             <!-- append-icon="mdi-lock" -->

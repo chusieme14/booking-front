@@ -26,6 +26,14 @@
                 </div>
             </template>
         </v-card-text>
+        <v-snackbar
+            :timeout="-1"
+            v-model="issuccess"
+            tile
+            :color="haserror?'error':'success'"
+        >
+            {{message}}
+        </v-snackbar>
     </v-card>
 </template>
 <script>
@@ -34,7 +42,10 @@ export default {
         return{
             payload:{},
             services:[],
-            selectedService:{}
+            selectedService:{},
+            haserror:false,
+            issuccess:false,
+            message:null,
         }
     },
     methods:{
@@ -49,7 +60,23 @@ export default {
         save(){
             this.payload.client_id = this.$auth.user.id
             this.$axios.post(`bookings`,this.payload).then(({data})=>{
-                this.$emit('book')
+                if(data.message){
+                    this.haserror = true
+                    this.issuccess = true
+                    this.message = data.message
+
+                    setTimeout(() => {
+                        this.haserror = false
+                        this.issuccess = false
+                    }, 3000);
+                }else{
+                    this.issuccess = true
+                     setTimeout(() => {
+                         this.message = "Booking successfully send"
+                        this.issuccess = false
+                    }, 3000);
+                    this.$emit('book')
+                }
             })
         }
     },

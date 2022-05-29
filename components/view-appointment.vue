@@ -21,7 +21,40 @@
                         <small>Schedule date: {{$moment(appointment.date_accepted).format('MMMM Do YYYY, h:mm:ss a')}}</small>
                         <br>
                         <small>Completed date: {{$moment(appointment.date_completed).format('MMMM Do YYYY, h:mm:ss a')}}</small>
-                        <p class="class-success">Done</p>
+                        <br>
+                        <small class="class-success">Done</small>
+                        <template v-if="!appointment.rating && israting">
+                            <v-icon @click="payload.star=1" :color="payload.star>=1?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon @click="payload.star=2" :color="payload.star>=2?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon @click="payload.star=3" :color="payload.star>=3?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon @click="payload.star=4" :color="payload.star>=4?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon @click="payload.star=5" :color="payload.star>=5?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-textarea
+                                color="success"
+                                filled
+                                label="Suggestion"
+                                placeholder="Suggestion"
+                                v-model="payload.suggestion"
+                            >
+
+                            </v-textarea>
+                        </template>
+                        <template v-if="appointment.rating">
+                            <v-icon :color="appointment.rating.star_number>=1?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon :color="appointment.rating.star_number>=2?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon :color="appointment.rating.star_number>=3?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon :color="appointment.rating.star_number>=4?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon :color="appointment.rating.star_number>=5?'yellow darken-1':''">mdi-star</v-icon>
+                            <br>
+                            <small>Suggestion: {{appointment.rating.suggestion}}</small>
+                        </template>
+                        <div class="class-action-rate">
+                            <v-btn v-if="!appointment.rating && !israting" small @click="israting=true">Rate now</v-btn>
+                            <template v-if="!appointment.rating && israting">
+                                <v-btn class="mr-2" small @click="israting=false">Cancel</v-btn>
+                                <v-btn small @click="saveRating(appointment)">Save</v-btn>
+                            </template>
+                        </div>
                     </template>
                     <template v-if="appointment.status==4">
                         <small>Requested date: {{$moment(appointment.date_requested).format('MMMM Do YYYY, h:mm:ss a')}}</small>
@@ -32,17 +65,23 @@
                </v-card-text>
            </v-card>
         </v-card-text>
-        <!-- <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn @click="update" color="success">Save</v-btn>
-        </v-card-actions> -->
         <v-snackbar
             :timeout="-1"
             v-model="issuccess"
             tile
-            color="success"
+            :color="haserror?'error':'success'"
         >
-            Change already save
+            {{message}}
+
+            <template v-slot:action="{ attrs }">
+                <v-btn
+                    text
+                    v-bind="attrs"
+                    @click="issuccess = false"
+                >
+                Close
+                </v-btn>
+            </template>
         </v-snackbar>
     </v-card>
 </template>
@@ -54,12 +93,40 @@
             start:new Date(),
             end:new Date(),
             appointments: [],
+            payload:{
+                star:0,
+                suggestion:''
+            },
             issuccess:false,
             star:0,
-            israting:true
+            israting:false,
+            haserror:false,
+            message:null
         }
       },
       methods:{
+            saveRating(val){
+                if(this.payload.star==0 || this.payload.suggestion==''){
+                    this.issuccess = true
+                    this.haserror = true
+                    this.message = 'Please complete all rating details'
+                    setTimeout(() => {
+                        this.issuccess = false
+                        this.haserror = false
+                    }, 3000);
+                    return
+                }
+                this.$axios.put(`rate-booking/${val.id}`, this.payload).then(({data})=>{
+                    this.getAppointments()
+                    this.payload.star = 0 
+                    this.payload.suggestion = ''
+                    this.issuccess = true
+                    this.message = 'Thank you for your feedback'
+                    setTimeout(() => {
+                        this.issuccess = false
+                    }, 3000);
+                })
+            },
             update(){
                 if(this.$route.params.code && this.$route.params.code!=this.$auth.user.share_code) {
                     this.payload.code = this.$route.params.code
@@ -124,5 +191,10 @@
     .view-main-container{
         max-height: 76vh;
         overflow: auto;
+    }
+    .class-action-rate
+    {
+        display: flex;
+        justify-content: flex-end;
     }
 </style>

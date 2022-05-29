@@ -6,7 +6,7 @@
                 <li :class="tabs==1?'active':''"><v-btn @click="changeTab(1)">Personal information</v-btn></li>
                 <li :class="tabs==2?'active':''"><v-btn @click="changeTab(2)">Book an appointment</v-btn></li>
                 <li :class="tabs==3?'active':''"><v-btn @click="changeTab(3)">View appointment</v-btn></li>
-                <li :class="tabs==4?'active':''"><v-btn @click="changeTab(4)">Rate appointment</v-btn></li>
+                <!-- <li :class="tabs==4?'active':''"><v-btn @click="changeTab(4)">Rate appointment</v-btn></li> -->
             </ul>
         </div>
         <div class="infos">
@@ -14,7 +14,7 @@
             <personal-info v-if="tabs==1"></personal-info>
             <booking v-if="tabs==2" @book="changeTab(3)"></booking>
             <view-appointment v-if="tabs==3" ></view-appointment>
-            <rate v-if="tabs==4"></rate>
+            <!-- <rate v-if="tabs==4"></rate> -->
         </div>
     </div>
 </template>
