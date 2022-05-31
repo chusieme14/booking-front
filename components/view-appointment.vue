@@ -15,14 +15,16 @@
                         <small>Schedule date: {{$moment(appointment.date_accepted).format('MMMM Do YYYY, h:mm:ss a')}}</small>
                         <p class="class-blue">Accepted</p>
                     </template>
-                    <template v-if="appointment.status==3">
+                    <template v-if="appointment.status==3||appointment.status==4">
                         <small>Requested date: {{$moment(appointment.date_requested).format('MMMM Do YYYY, h:mm:ss a')}}</small>
                         <br>
-                        <small>Schedule date: {{$moment(appointment.date_accepted).format('MMMM Do YYYY, h:mm:ss a')}}</small>
+                        <small v-if="appointment.status==3">Schedule date: {{$moment(appointment.date_accepted).format('MMMM Do YYYY, h:mm:ss a')}}</small>
+                        <small v-if="appointment.status==4">Declined reason: {{appointment.declined_reason}}</small>
+                        <br v-if="appointment.status==3">
+                        <small v-if="appointment.status==3">Completed date: {{$moment(appointment.date_completed).format('MMMM Do YYYY, h:mm:ss a')}}</small>
                         <br>
-                        <small>Completed date: {{$moment(appointment.date_completed).format('MMMM Do YYYY, h:mm:ss a')}}</small>
-                        <br>
-                        <small class="class-success">Done</small>
+                        <small v-if="appointment.status==3" class="class-success">Done</small>
+                        <small v-if="appointment.status==4" class="class-error">Declined</small>
                         <template v-if="!appointment.rating && israting">
                             <v-icon @click="payload.star=1" :color="payload.star>=1?'yellow darken-1':''">mdi-star</v-icon>
                             <v-icon @click="payload.star=2" :color="payload.star>=2?'yellow darken-1':''">mdi-star</v-icon>
@@ -56,12 +58,12 @@
                             </template>
                         </div>
                     </template>
-                    <template v-if="appointment.status==4">
+                    <!-- <template v-if="appointment.status==4">
                         <small>Requested date: {{$moment(appointment.date_requested).format('MMMM Do YYYY, h:mm:ss a')}}</small>
                         <br>
                         <small>Declined reason: {{appointment.declined_reason}}</small>
                         <p class="class-error">Declined</p>
-                    </template>
+                    </template> -->
                </v-card-text>
            </v-card>
         </v-card-text>
