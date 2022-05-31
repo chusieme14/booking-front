@@ -82,7 +82,7 @@ export default {
         async update(){
             if(!this.$refs.form.validate()) return;
             try {
-                await this.$axios.put(`update-graduate-password/${this.payload.id}`,this.payload).then(({data})=>{
+                await this.$axios.put(`update-client-password/${this.payload.id}`,this.payload).then(({data})=>{
                     this.message = "Password was successfully updated"
                     this.issuccess = true
                     setTimeout(() => {
@@ -98,7 +98,7 @@ export default {
             }
         },
         getGraduate(){
-            this.$axios.get(`graduates/${this.$auth.user.id}`).then(({data})=>{
+            this.$axios.get(`clients/${this.$auth.user.id}`).then(({data})=>{
                 this.payload = data
                 // this.payload.avatar = this.imageUrl+this.payload.avatar
             })

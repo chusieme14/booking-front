@@ -18,13 +18,6 @@
                             outlined
                             dense
                         ></v-text-field>
-                        <!-- <v-text-field
-                            color="success"
-                            label="Email"
-                            v-model="payload.email"
-                            filled
-                            dense
-                        ></v-text-field> -->
                         <v-text-field
                             v-model="payload.password"
                             color="success"
@@ -38,7 +31,6 @@
                             @keydown.enter="login"
                             dense
                         ></v-text-field>
-                            <!-- append-icon="mdi-lock" -->
                     </v-form>
                 </v-card-text>
                 <v-card-actions>
@@ -47,7 +39,7 @@
                 </v-card-actions>
                  <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="forgot-pass">Forgot password ?</v-btn>
+                    <v-btn @click="$router.push({path: '/forgot-password'})" class="forgot-pass">Forgot password ?</v-btn>
                 </v-card-actions>
             </v-card>
         <v-snackbar
