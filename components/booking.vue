@@ -10,18 +10,24 @@
                 item-text="name"
                 return-object
                 @change="changeService"
+                multiple
                 attach
             >
             </v-autocomplete>
-            <template v-if="selectedService.id">
-                <h1>Price: {{selectedService.price}}</h1>
-                <small class="class-small">Attention: Please pay on the cashier first before going to registra..</small>
-                <h1 v-if="selectedService.requirements" class="mt-3">Requirements:</h1>
-                <div class="class-reqs" v-if="selectedService.requirements">
-                    <p v-for="requirement in selectedService.requirements" 
-                        :key="requirement.id">{{requirement.name}}</p>
+            <template >
+                <div class="class-main-content">
+                    <div v-for="service in selectedService" :key="service.id">
+                        <h1>{{service.name}}</h1>
+                        <h3>Price: {{service.price}}</h3>
+                        <small class="class-small">Attention: Please pay on the cashier first before going to registra..</small>
+                        <h1 v-if="service.requirements" class="mt-3">Requirements:</h1>
+                        <div class="class-reqs" v-if="service.requirements">
+                            <p v-for="requirement in service.requirements" 
+                                :key="requirement.id">{{requirement.name}}</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="class-action">
+                <div v-if="selectedService.length" class="class-action">
                     <v-btn @click="save" color="success">Book</v-btn>
                 </div>
             </template>
@@ -42,20 +48,23 @@ export default {
         return{
             payload:{},
             services:[],
-            selectedService:{},
+            selectedService:[],
             haserror:false,
             issuccess:false,
             message:null,
         }
     },
     methods:{
+        _pluck(items, key) {
+          return items.map(item => item[key]);
+        },
         getServices(){
             this.$axios.get(`services`).then(({data})=>{
                 this.services = data.data
             })
         },
         changeService(){
-            this.payload.service_id = this.selectedService.id
+            this.payload.service_ids = this._pluck(this.selectedService, 'id')
         },
         save(){
             this.payload.client_id = this.$auth.user.id
@@ -102,5 +111,9 @@ export default {
     }
     .class-small{
         color: red;
+    }
+    .class-main-content{
+        max-height: 55vh !important;
+        overflow: auto;
     }
 </style>
