@@ -4,13 +4,13 @@
         <v-card-text>
             <v-autocomplete
                 v-model="selectedService"
+                :multiple="true"
                 :items="services"
                 color="success"
                 label="Service"
                 item-text="name"
                 return-object
                 @change="changeService"
-                multiple
                 attach
             >
             </v-autocomplete>
