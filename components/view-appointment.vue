@@ -9,22 +9,24 @@
                         <small >Requested date: {{$moment(appointment.date_requested).format('MMMM Do YYYY, h:mm:ss a')}}</small>
                         <p class="class-primary">Waiting</p>
                     </template>
-                    <template v-if="appointment.status==2">
+                    <!-- <template v-if="appointment.status==2">
                         <small>Requested date: {{$moment(appointment.date_requested).format('MMMM Do YYYY, h:mm:ss a')}}</small>
                         <br>
                         <small>Schedule date: {{$moment(appointment.date_accepted).format('MMMM Do YYYY, h:mm:ss a')}}</small>
                         <p class="class-blue">Accepted</p>
-                    </template>
-                    <template v-if="appointment.status==3||appointment.status==4">
+                    </template> -->
+                    <template v-if="appointment.status==3||appointment.status==4 || appointment.status==2 || appointment.status==5">
                         <small>Requested date: {{$moment(appointment.date_requested).format('MMMM Do YYYY, h:mm:ss a')}}</small>
                         <br>
-                        <small v-if="appointment.status==3">Schedule date: {{$moment(appointment.date_accepted).format('MMMM Do YYYY, h:mm:ss a')}}</small>
+                        <small v-if="appointment.status==3 || appointment.status==2 || appointment.status==5">Schedule date: {{$moment(appointment.date_accepted).format('MMMM Do YYYY, h:mm:ss a')}}</small>
                         <small v-if="appointment.status==4">Declined reason: {{appointment.declined_reason}}</small>
-                        <br v-if="appointment.status==3">
-                        <small v-if="appointment.status==3">Completed date: {{$moment(appointment.date_completed).format('MMMM Do YYYY, h:mm:ss a')}}</small>
+                        <br v-if="appointment.status==3 || appointment.status==5">
+                        <small v-if="appointment.status==3 || appointment.status==5">Completed date: {{$moment(appointment.date_completed).format('MMMM Do YYYY, h:mm:ss a')}}</small>
                         <br>
+                        <small v-if="appointment.status==2" class="class-success">Accepted</small>
                         <small v-if="appointment.status==3" class="class-success">Done</small>
                         <small v-if="appointment.status==4" class="class-error">Declined</small>
+                        <small v-if="appointment.status==5" class="class-success">Rated</small>
                         <template v-if="!appointment.rating && israting">
                             <v-icon @click="payload.star=1" :color="payload.star>=1?'yellow darken-1':''">mdi-star</v-icon>
                             <v-icon @click="payload.star=2" :color="payload.star>=2?'yellow darken-1':''">mdi-star</v-icon>
@@ -51,7 +53,7 @@
                             <small>Suggestion: {{appointment.rating.suggestion}}</small>
                         </template>
                         <div class="class-action-rate">
-                            <v-btn v-if="!appointment.rating && !israting" small @click="israting=true">Rate now</v-btn>
+                            <v-btn v-if="!appointment.rating && !israting" small @click="israting=true">Document received</v-btn>
                             <template v-if="!appointment.rating && israting">
                                 <v-btn class="mr-2" small @click="israting=false">Cancel</v-btn>
                                 <v-btn small @click="saveRating(appointment)">Save</v-btn>
