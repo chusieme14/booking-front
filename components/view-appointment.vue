@@ -27,12 +27,33 @@
                         <small v-if="appointment.status==3" class="class-success">Done</small>
                         <small v-if="appointment.status==4" class="class-error">Declined</small>
                         <small v-if="appointment.status==5" class="class-success">Rated</small>
+                        <br>
+
                         <template v-if="!appointment.rating && israting">
-                            <v-icon @click="payload.star=1" :color="payload.star>=1?'yellow darken-1':''">mdi-star</v-icon>
+                            <small class="class-success">Waiting Time</small>
+                            <v-icon class="waiting-time" @click="payload.star=1" :color="payload.star>=1?'yellow darken-1':''">mdi-star</v-icon>
                             <v-icon @click="payload.star=2" :color="payload.star>=2?'yellow darken-1':''">mdi-star</v-icon>
                             <v-icon @click="payload.star=3" :color="payload.star>=3?'yellow darken-1':''">mdi-star</v-icon>
                             <v-icon @click="payload.star=4" :color="payload.star>=4?'yellow darken-1':''">mdi-star</v-icon>
                             <v-icon @click="payload.star=5" :color="payload.star>=5?'yellow darken-1':''">mdi-star</v-icon>
+                            <br>
+                        </template>
+                        <template v-if="!appointment.rating && israting">
+                            <small class="class-success">Service Provided</small>
+                            <v-icon @click="payload.star1=1" :color="payload.star1>=1?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon @click="payload.star1=2" :color="payload.star1>=2?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon @click="payload.star1=3" :color="payload.star1>=3?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon @click="payload.star1=4" :color="payload.star1>=4?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon @click="payload.star1=5" :color="payload.star1>=5?'yellow darken-1':''">mdi-star</v-icon>
+                            <br>
+                        </template>
+                        <template v-if="!appointment.rating && israting">
+                            <small class="class-success">Office Staff</small>
+                            <v-icon class="office-staff" @click="payload.star2=1" :color="payload.star2>=1?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon @click="payload.star2=2" :color="payload.star2>=2?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon @click="payload.star2=3" :color="payload.star2>=3?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon @click="payload.star2=4" :color="payload.star2>=4?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon @click="payload.star2=5" :color="payload.star2>=5?'yellow darken-1':''">mdi-star</v-icon>
                             <v-textarea
                                 color="success"
                                 filled
@@ -43,12 +64,32 @@
 
                             </v-textarea>
                         </template>
+
                         <template v-if="appointment.rating">
-                            <v-icon :color="appointment.rating.star_number>=1?'yellow darken-1':''">mdi-star</v-icon>
+                            <small class="class-success">Waiting Time</small>
+                            <v-icon class="waiting-time" :color="appointment.rating.star_number>=1?'yellow darken-1':''">mdi-star</v-icon>
                             <v-icon :color="appointment.rating.star_number>=2?'yellow darken-1':''">mdi-star</v-icon>
                             <v-icon :color="appointment.rating.star_number>=3?'yellow darken-1':''">mdi-star</v-icon>
                             <v-icon :color="appointment.rating.star_number>=4?'yellow darken-1':''">mdi-star</v-icon>
                             <v-icon :color="appointment.rating.star_number>=5?'yellow darken-1':''">mdi-star</v-icon>
+                            <br>
+                        </template>
+                        <template v-if="appointment.service_provided">
+                            <small class="class-success">Service Provided</small>
+                            <v-icon :color="appointment.service_provided.star_number>=1?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon :color="appointment.service_provided.star_number>=2?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon :color="appointment.service_provided.star_number>=3?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon :color="appointment.service_provided.star_number>=4?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon :color="appointment.service_provided.star_number>=5?'yellow darken-1':''">mdi-star</v-icon>
+                            <br>
+                        </template>
+                        <template v-if="appointment.rating">
+                            <small class="class-success">Office Staff</small>
+                            <v-icon class="office-staff" :color="appointment.rating.star_number>=1?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon :color="appointment.office_staff.star_number>=2?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon :color="appointment.office_staff.star_number>=3?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon :color="appointment.office_staff.star_number>=4?'yellow darken-1':''">mdi-star</v-icon>
+                            <v-icon :color="appointment.office_staff.star_number>=5?'yellow darken-1':''">mdi-star</v-icon>
                             <br>
                             <small>Suggestion: {{appointment.rating.suggestion}}</small>
                         </template>
@@ -99,6 +140,8 @@
             appointments: [],
             payload:{
                 star:0,
+                star1:0,
+                star2:0,
                 suggestion:''
             },
             issuccess:false,
@@ -200,5 +243,11 @@
     {
         display: flex;
         justify-content: flex-end;
+    }
+    .waiting-time{
+        margin-left: 18px;
+    }
+    .office-staff{
+        margin-left: 26px;
     }
 </style>
