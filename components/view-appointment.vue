@@ -29,7 +29,7 @@
                         <small v-if="appointment.status==5" class="class-success">Rated</small>
                         <br>
 
-                        <template v-if="!appointment.rating && israting">
+                        <template v-if="!appointment.rating && israting && selected_id==appointment.id">
                             <small class="class-success">Waiting Time</small>
                             <v-icon class="waiting-time" @click="payload.star=1" :color="payload.star>=1?'yellow darken-1':''">mdi-star</v-icon>
                             <v-icon @click="payload.star=2" :color="payload.star>=2?'yellow darken-1':''">mdi-star</v-icon>
@@ -38,7 +38,7 @@
                             <v-icon @click="payload.star=5" :color="payload.star>=5?'yellow darken-1':''">mdi-star</v-icon>
                             <br>
                         </template>
-                        <template v-if="!appointment.rating && israting">
+                        <template v-if="!appointment.rating && israting && selected_id==appointment.id">
                             <small class="class-success">Service Provided</small>
                             <v-icon @click="payload.star1=1" :color="payload.star1>=1?'yellow darken-1':''">mdi-star</v-icon>
                             <v-icon @click="payload.star1=2" :color="payload.star1>=2?'yellow darken-1':''">mdi-star</v-icon>
@@ -47,7 +47,7 @@
                             <v-icon @click="payload.star1=5" :color="payload.star1>=5?'yellow darken-1':''">mdi-star</v-icon>
                             <br>
                         </template>
-                        <template v-if="!appointment.rating && israting">
+                        <template v-if="!appointment.rating && israting && selected_id==appointment.id">
                             <small class="class-success">Office Staff</small>
                             <v-icon class="office-staff" @click="payload.star2=1" :color="payload.star2>=1?'yellow darken-1':''">mdi-star</v-icon>
                             <v-icon @click="payload.star2=2" :color="payload.star2>=2?'yellow darken-1':''">mdi-star</v-icon>
@@ -94,9 +94,9 @@
                             <small>Suggestion: {{appointment.rating.suggestion}}</small>
                         </template>
                         <div class="class-action-rate">
-                            <v-btn v-if="!appointment.rating && !israting" small @click="israting=true">Document received</v-btn>
-                            <template v-if="!appointment.rating && israting">
-                                <v-btn class="mr-2" small @click="israting=false">Cancel</v-btn>
+                            <v-btn v-if="!appointment.rating && selected_id!=appointment.id" small @click="israting=true, selected_id=appointment.id">Document received</v-btn>
+                            <template v-if="!appointment.rating && israting && selected_id==appointment.id">
+                                <v-btn class="mr-2" small @click="israting=false, selected_id=0">Cancel</v-btn>
                                 <v-btn small @click="saveRating(appointment)">Save</v-btn>
                             </template>
                         </div>
@@ -148,12 +148,13 @@
             star:0,
             israting:false,
             haserror:false,
-            message:null
+            message:null,
+            selected_id:0
         }
       },
       methods:{
             saveRating(val){
-                if(this.payload.star==0 || this.payload.suggestion==''){
+                if(this.payload.star==0 || this.payload.star1==0 || this.payload.star2==0){
                     this.issuccess = true
                     this.haserror = true
                     this.message = 'Please complete all rating details'
@@ -166,6 +167,8 @@
                 this.$axios.put(`rate-booking/${val.id}`, this.payload).then(({data})=>{
                     this.getAppointments()
                     this.payload.star = 0 
+                    this.payload.star1 = 0 
+                    this.payload.star2 = 0 
                     this.payload.suggestion = ''
                     this.issuccess = true
                     this.message = 'Thank you for your feedback'
